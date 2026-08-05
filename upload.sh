@@ -7,7 +7,7 @@ set -euo pipefail
 
 REMOTE_USER="team_mga"
 REMOTE_HOST="roji.net"
-REMOTE_PATH="/team-mga.net/"
+REMOTE_PATH="~/team-mga.net/"
 LOCAL_DIR="$(cd "$(dirname "$0")" && pwd)/"
 
 echo "Subiendo pagina a ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}"
