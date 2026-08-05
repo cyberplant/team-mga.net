@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MGA - Mas que Gamers, Amigos</title>
+    <title>|MGA| - Mas que Gamers, Amigos</title>
     <meta name="description" content="Team MGA - Call of Duty 4. Mas que Gamers, Amigos.">
     <style>
         * {
@@ -25,9 +25,23 @@
             background-image:
                 radial-gradient(circle at 20% 50%, rgba(255, 102, 0, 0.06) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(204, 51, 0, 0.05) 0%, transparent 50%);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .container {
+            position: relative;
+            z-index: 1;
             max-width: 720px;
             width: 100%;
             text-align: center;
@@ -199,8 +213,9 @@
     </style>
 </head>
 <body>
+    <canvas id="bg-canvas"></canvas>
     <div class="container">
-        <div class="logo">MGA</div>
+        <div class="logo">|MGA|</div>
         <div class="slogan">Mas que Gamers, <span class="quote">Amigos</span></div>
 
         <div class="server-card">
@@ -248,6 +263,118 @@
                 setTimeout(function() { el.classList.remove('copied-ok'); }, 2000);
             });
         }
+
+        // Efecto de fondo: grid tactico + particulas flotantes
+        (function() {
+            var canvas = document.getElementById('bg-canvas');
+            var ctx = canvas.getContext('2d');
+            var particles = [];
+            var w, h;
+            var PARTICLE_COUNT = 130;
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+
+            function initParticles() {
+                particles = [];
+                for (var i = 0; i < PARTICLE_COUNT; i++) {
+                    particles.push({
+                        x: Math.random() * w,
+                        y: Math.random() * h,
+                        vx: (Math.random() - 0.5) * 1.2,
+                        vy: (Math.random() - 0.5) * 1.2,
+                        size: Math.random() * 3.5 + 1.5,
+                        alpha: Math.random() * 0.5 + 0.3,
+                        hue: Math.random() < 0.7 ? 0 : 1 // 0=naranja, 1=amarillo
+                    });
+                }
+            }
+
+            function drawGrid() {
+                var gridSize = 60;
+                ctx.strokeStyle = 'rgba(255, 102, 0, 0.04)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                for (var x = 0; x <= w; x += gridSize) {
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, h);
+                }
+                for (var y = 0; y <= h; y += gridSize) {
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(w, y);
+                }
+                ctx.stroke();
+            }
+
+            function drawParticles() {
+                for (var i = 0; i < particles.length; i++) {
+                    var p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = w;
+                    if (p.x > w) p.x = 0;
+                    if (p.y < 0) p.y = h;
+                    if (p.y > h) p.y = 0;
+
+                    var color = p.hue === 0
+                        ? 'rgba(255, 102, 0, ' + p.alpha + ')'
+                        : 'rgba(255, 204, 0, ' + p.alpha + ')';
+
+                    // Glow
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size * 2.5, 0, Math.PI * 2);
+                    var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 2.5);
+                    grad.addColorStop(0, color);
+                    grad.addColorStop(1, 'rgba(255, 102, 0, 0)');
+                    ctx.fillStyle = grad;
+                    ctx.fill();
+
+                    // Nucleo
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = color;
+                    ctx.fill();
+                }
+
+                // Lineas entre particulas cercanas
+                for (var i = 0; i < particles.length; i++) {
+                    for (var j = i + 1; j < particles.length; j++) {
+                        var dx = particles[i].x - particles[j].x;
+                        var dy = particles[i].y - particles[j].y;
+                        var dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 130) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = 'rgba(255, 102, 0, ' + (0.15 * (1 - dist / 130)) + ')';
+                            ctx.lineWidth = 0.6;
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animate() {
+                // Rastro: capa semi-transparente en vez de clear total
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
+                ctx.fillRect(0, 0, w, h);
+                drawGrid();
+                drawParticles();
+                requestAnimationFrame(animate);
+            }
+
+            resize();
+            initParticles();
+            animate();
+
+            window.addEventListener('resize', function() {
+                resize();
+                initParticles();
+            });
+        })();
     </script>
 </body>
 </html>
