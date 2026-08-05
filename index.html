@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MGA - Mas que Gamers, Amigos</title>
+    <meta name="description" content="Team MGA - Call of Duty 4. Mas que Gamers, Amigos.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(255, 102, 0, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(204, 51, 0, 0.05) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 720px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: clamp(3.5rem, 12vw, 7rem);
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            background: linear-gradient(135deg, #ff6600 0%, #cc3300 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(255, 102, 0, 0.3);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .slogan {
+            font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+            color: #ccc;
+            font-style: italic;
+            margin-bottom: 3rem;
+            letter-spacing: 0.05em;
+        }
+
+        .slogan .quote {
+            color: #ff6600;
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        .server-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 102, 0, 0.2);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .server-card h2 {
+            font-size: 1.3rem;
+            color: #ff6600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .server-ip {
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #fff;
+            background: rgba(255, 102, 0, 0.1);
+            border: 1px solid rgba(255, 102, 0, 0.3);
+            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: all;
+        }
+
+        .server-ip:hover {
+            background: rgba(255, 102, 0, 0.2);
+            border-color: rgba(255, 102, 0, 0.6);
+        }
+
+        .server-ip .label {
+            display: block;
+            font-size: 0.7rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.3rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: normal;
+        }
+
+        .server-ip .copied {
+            display: none;
+            font-size: 0.7rem;
+            color: #4CAF50;
+            margin-top: 0.3rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .server-ip.copied-ok .copied {
+            display: block;
+        }
+
+        .gt-banner {
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .gt-banner img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        .gt-html-banner {
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .gt-html-banner iframe {
+            border: none;
+            max-width: 100%;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .links a {
+            color: #ff6600;
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid rgba(255, 102, 0, 0.3);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            background: rgba(255, 102, 0, 0.05);
+        }
+
+        .links a:hover {
+            background: rgba(255, 102, 0, 0.15);
+            border-color: rgba(255, 102, 0, 0.6);
+            color: #fff;
+        }
+
+        .game-info {
+            color: #888;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .game-info span {
+            color: #ccc;
+        }
+
+        footer {
+            margin-top: 3rem;
+            color: #555;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        footer a {
+            color: #777;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #ff6600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">MGA</div>
+        <div class="slogan">Mas que Gamers, <span class="quote">Amigos</span></div>
+
+        <div class="server-card">
+            <h2>Servidor Call of Duty 4</h2>
+
+            <div class="game-info">
+                <span>Team |MGA| S&amp;D</span> &middot; Call of Duty 4 &middot; Argentina
+            </div>
+
+            <div style="margin: 1.5rem 0;">
+                <div class="server-ip" id="serverIp" onclick="copyIp()" title="Click para copiar">
+                    <span class="label">IP del Servidor</span>
+                    45.235.99.18:28960
+                    <span class="copied">Copiado!</span>
+                </div>
+            </div>
+
+            <div class="gt-banner">
+                <a href="https://www.gametracker.com/server_info/45.235.99.18:28960/" target="_blank" rel="noopener">
+                    <img src="https://cache.gametracker.com/server_info/45.235.99.18:28960/b_560_95_1.png" width="560" height="95" alt="GameTracker - Team MGA Server">
+                </a>
+            </div>
+
+            <div class="gt-html-banner">
+                <iframe src="https://cache.gametracker.com/components/html0/?host=45.235.99.18:28960&showMap=1&showCurrPlayers=1&showTopPlayers=1&showBlogs=0&width=350&bgColor=333333&titleBgColor=222222&titleColor=FF9900&borderColor=555555&linkColor=FFCC00&color1=222222&fontColor=CCCCCC" frameborder="0" scrolling="no" width="350" height="436"></iframe>
+            </div>
+
+            <div class="links">
+                <a href="https://www.gametracker.com/server_info/45.235.99.18:28960/" target="_blank" rel="noopener">Ver en GameTracker</a>
+                <a href="https://www.gametracker.com/clan/Team-MGA/" target="_blank" rel="noopener">Clan Team-MGA</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Team MGA &middot; <a href="https://www.gametracker.com/clan/Team-MGA/" target="_blank" rel="noopener">GameTracker</a></p>
+        </footer>
+    </div>
+
+    <script>
+        function copyIp() {
+            var ip = '45.235.99.18:28960';
+            var el = document.getElementById('serverIp');
+            navigator.clipboard.writeText(ip).then(function() {
+                el.classList.add('copied-ok');
+                setTimeout(function() { el.classList.remove('copied-ok'); }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
