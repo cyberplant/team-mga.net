@@ -9,6 +9,9 @@ on:
     types:
       - closed
 
+permissions:
+  pull-requests: write
+
 env:
   REMOTE_USER: team_mga
   REMOTE_HOST: roji.net
@@ -90,11 +93,28 @@ jobs:
             --exclude '.DS_Store' \
             ./ "$REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH"
 
-      - name: Notify
+      - name: Comentar PR con URL de preview
         env:
           SAFE_NAME: ${{ steps.branch.outputs.safe_name }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Preview deployada a: https://team-mga.net/branch/$SAFE_NAME/"
+          PREVIEW_URL="https://team-mga.net/branch/$SAFE_NAME/"
+          # Buscar PRs abiertos para esta branch
+          PR_NUMBER=$(gh pr list --head "${{ github.ref_name }}" --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
+          if [ -n "$PR_NUMBER" ]; then
+            # Buscar si ya existe un comentario nuestro con la URL
+            EXISTING=$(gh pr view "$PR_NUMBER" --json comments --jq '.comments[] | select(.body | contains("Preview deployada")) | .id' 2>/dev/null | tail -1 || echo "")
+            BODY="🚀 **Preview deployada:** $PREVIEW_URL"
+            if [ -n "$EXISTING" ]; then
+              # Actualizar comentario existente
+              gh api repos/${{ github.repository }}/issues/comments/$EXISTING -X PATCH -f body="$BODY" 2>/dev/null || true
+            else
+              # Crear comentario nuevo
+              gh pr comment "$PR_NUMBER" --body "$BODY"
+            fi
+          else
+            echo "No hay PR abierto para esta branch. Preview en: $PREVIEW_URL"
+          fi
 
   # Limpieza de preview: cuando se cierra/mergea un PR
   cleanup-preview:
@@ -118,9 +138,28 @@ jobs:
           echo "safe_name=$SAFE" >> $GITHUB_OUTPUT
 
       - name: Remove preview directory
+        id: cleanup
         env:
           SAFE_NAME: ${{ steps.branch.outputs.safe_name }}
         run: |
           REMOTE_PATH="~/$REMOTE_BASE/branch/$SAFE_NAME"
           echo "Eliminando: $REMOTE_PATH"
-          ssh "$REMOTE_USER@$REMOTE_HOST" "rm -rf '$REMOTE_PATH' && echo 'Preview eliminada' || echo 'No existia'"
+          if ssh "$REMOTE_USER@$REMOTE_HOST" "test -d '$REMOTE_PATH' && rm -rf '$REMOTE_PATH' && echo 'DELETED' || echo 'NOTFOUND'"; then
+            echo "result=ok" >> $GITHUB_OUTPUT
+          else
+            echo "result=error" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comentar resultado de limpieza en el PR
+        env:
+          SAFE_NAME: ${{ steps.branch.outputs.safe_name }}
+          CLEANUP_RESULT: ${{ steps.cleanup.outputs.result }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          if [ "$CLEANUP_RESULT" = "ok" ]; then
+            BODY="🧹 **Preview eliminada:** se borró \`https://team-mga.net/branch/$SAFE_NAME/\` del servidor."
+          else
+            BODY="⚠️ **Hubo un problema al eliminar la preview** (\`https://team-mga.net/branch/$SAFE_NAME/\`). Revisar los logs del workflow."
+          fi
+          gh pr comment "$PR_NUMBER" --body "$BODY"
