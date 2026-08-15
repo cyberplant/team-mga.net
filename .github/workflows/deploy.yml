@@ -1,0 +1,141 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - '**'
+  pull_request:
+    types:
+      - closed
+
+env:
+  REMOTE_USER: team_mga
+  REMOTE_HOST: roji.net
+  REMOTE_BASE: ~/team-mga.net
+
+jobs:
+  # Deploy de produccion: push a main
+  deploy-production:
+    name: Deploy produccion
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+          cat >> ~/.ssh/config <<EOF
+          Host $REMOTE_HOST
+            HostName $REMOTE_HOST
+            User $REMOTE_USER
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+          EOF
+
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude '.gitignore' \
+            --exclude 'upload.sh' \
+            --exclude 'setup-deploy-key.sh' \
+            --exclude 'particles-test.html' \
+            --exclude '.DS_Store' \
+            ./ "$REMOTE_USER@$REMOTE_HOST:$REMOTE_BASE/"
+
+      - name: Notify
+        run: echo "Deployado a produccion: https://team-mga.net/"
+
+  # Deploy de preview: push a cualquier branch que no sea main
+  deploy-preview:
+    name: Deploy preview (${{ github.ref_name }})
+    if: github.ref != 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+          cat >> ~/.ssh/config <<EOF
+          Host $REMOTE_HOST
+            HostName $REMOTE_HOST
+            User $REMOTE_USER
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+          EOF
+
+      - name: Sanitize branch name
+        id: branch
+        run: |
+          # Convertir nombre de branch a algo seguro para directorio
+          SAFE=$(echo "${{ github.ref_name }}" | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/\.\.*/-/g')
+          echo "safe_name=$SAFE" >> $GITHUB_OUTPUT
+          echo "Branch segura: $SAFE"
+
+      - name: Deploy via rsync
+        run: |
+          REMOTE_PATH="$REMOTE_BASE/branch/${{ steps.branch.outputs.safe_name }}/"
+          echo "Subiendo a: $REMOTE_PATH"
+          # Crear el directorio remoto si no existe
+          ssh $REMOTE_USER@$REMOTE_HOST "mkdir -p '$REMOTE_BASE/branch/${{ steps.branch.outputs.safe_name }}'"
+          rsync -avz --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude '.gitignore' \
+            --exclude 'upload.sh' \
+            --exclude 'setup-deploy-key.sh' \
+            --exclude 'particles-test.html' \
+            --exclude '.DS_Store' \
+            ./ "$REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH"
+
+      - name: Notify
+        run: |
+          echo "Preview deployada a: https://team-mga.net/branch/${{ steps.branch.outputs.safe_name }}/"
+
+  # Limpieza de preview: cuando se cierra/mergea un PR
+  cleanup-preview:
+    name: Limpiar preview
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+          cat >> ~/.ssh/config <<EOF
+          Host $REMOTE_HOST
+            HostName $REMOTE_HOST
+            User $REMOTE_USER
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+          EOF
+
+      - name: Sanitize branch name
+        id: branch
+        run: |
+          # Usar el nombre del branch del PR head
+          SAFE=$(echo "${{ github.head_ref }}" | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/\.\.*/-/g')
+          echo "safe_name=$SAFE" >> $GITHUB_OUTPUT
+
+      - name: Remove preview directory
+        run: |
+          REMOTE_PATH="$REMOTE_BASE/branch/${{ steps.branch.outputs.safe_name }}"
+          echo "Eliminando: $REMOTE_PATH"
+          ssh $REMOTE_USER@$REMOTE_HOST "rm -rf '$REMOTE_PATH' && echo 'Preview eliminada' || echo 'No existia'"
