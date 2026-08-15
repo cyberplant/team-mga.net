@@ -138,9 +138,28 @@ jobs:
           echo "safe_name=$SAFE" >> $GITHUB_OUTPUT
 
       - name: Remove preview directory
+        id: cleanup
         env:
           SAFE_NAME: ${{ steps.branch.outputs.safe_name }}
         run: |
           REMOTE_PATH="~/$REMOTE_BASE/branch/$SAFE_NAME"
           echo "Eliminando: $REMOTE_PATH"
-          ssh "$REMOTE_USER@$REMOTE_HOST" "rm -rf '$REMOTE_PATH' && echo 'Preview eliminada' || echo 'No existia'"
+          if ssh "$REMOTE_USER@$REMOTE_HOST" "test -d '$REMOTE_PATH' && rm -rf '$REMOTE_PATH' && echo 'DELETED' || echo 'NOTFOUND'"; then
+            echo "result=ok" >> $GITHUB_OUTPUT
+          else
+            echo "result=error" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comentar resultado de limpieza en el PR
+        env:
+          SAFE_NAME: ${{ steps.branch.outputs.safe_name }}
+          CLEANUP_RESULT: ${{ steps.cleanup.outputs.result }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          if [ "$CLEANUP_RESULT" = "ok" ]; then
+            BODY="🧹 **Preview eliminada:** se borró \`https://team-mga.net/branch/$SAFE_NAME/\` del servidor."
+          else
+            BODY="⚠️ **Hubo un problema al eliminar la preview** (\`https://team-mga.net/branch/$SAFE_NAME/\`). Revisar los logs del workflow."
+          fi
+          gh pr comment "$PR_NUMBER" --body "$BODY"
