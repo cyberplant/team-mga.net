@@ -39,7 +39,8 @@ Cuando se apruebe, **se sube solo** a la página. No tenés que hacer nada más.
 ### Instalación (una sola vez)
 
 1. **Instalá Git**: descargalo de https://git-scm.com/downloads
-2. **Configurá tu nombre y email** (abrir Terminal / Git Bash):
+   - En Windows, te va a instalar **Git Bash** (una terminal que funciona como la de Linux). Usá esa para los comandos de Git.
+2. **Configurá tu nombre y email** (abrir Git Bash en Windows, o Terminal en Mac/Linux):
    ```bash
    git config --global user.name "Tu Nombre"
    git config --global user.email "tu@email.com"
@@ -49,6 +50,20 @@ Cuando se apruebe, **se sube solo** a la página. No tenés que hacer nada más.
    git clone git@github.com:cyberplant/team-mga.net.git
    cd team-mga.net
    ```
+
+### ¿No te gusta la consola? Usá GitHub Desktop
+
+Si estás en Windows y no querés usar la consola, **GitHub Desktop** es una app con interfaz gráfica que hace lo mismo pero con botones:
+
+1. Descargalo de https://desktop.github.com/
+2. Iniciá sesión con tu cuenta de GitHub
+3. Clic en "Clone a repository from the Internet" → buscá `cyberplant/team-mga.net`
+4. Para crear una branch: arriba dice "Current branch" → hacé clic → "New branch"
+5. Para guardar cambios: escribí un mensaje abajo a la izquierda y clic en "Commit to..."
+6. Para subir: clic en "Push origin"
+7. Para abrir un PR: clic en "View on GitHub" → "Create pull request"
+
+Es lo mismo que la consola, pero con botones. Usá lo que te sea más cómodo.
 
 ### Flujo de trabajo (cada vez que quieras cambiar algo)
 
@@ -115,6 +130,9 @@ Si estás usando Devin, Claude, o cualquier otra IA para que te ayude, decile:
 > "Estoy trabajando en el repo team-mga.net, lee el AGENTS.md para entender el proyecto"
 
 El archivo `AGENTS.md` tiene toda la info técnica que la IA necesita para ayudarte bien.
+
+**¿La IA puede hacer el Git por mí?**
+Sí. Si estás usando una IA que puede ejecutar comandos (como Devin), podés pedirle directamente que cree la branch, haga el commit, suba el código y abra el PR. Vos solo concentráte en qué querés cambiar y dejá que la IA se ocupe del resto.
 
 ---
 
