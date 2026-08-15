@@ -46,7 +46,7 @@ jobs:
             ./ "$REMOTE_USER@$REMOTE_HOST:~/$REMOTE_BASE/"
 
       - name: Notify
-        run: echo "Deployado a produccion: https://team-mga.net/"
+        run: 'echo "Deployado a produccion: https://team-mga.net/"'
 
   # Deploy de preview: push a cualquier branch que no sea main
   deploy-preview:
