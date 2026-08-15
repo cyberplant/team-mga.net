@@ -177,8 +177,8 @@
 
     function getColor(hue, alpha) {
         return hue === 0
-            ? 'rgba(255, 102, 0, ' + alpha + ')'
-            : 'rgba(255, 204, 0, ' + alpha + ')';
+            ? 'rgba(0, 200, 80, ' + alpha + ')'
+            : 'rgba(100, 255, 150, ' + alpha + ')';
     }
 
     function getParticleColor(p, alpha) {
@@ -243,7 +243,7 @@
             }
         }
 
-        ctx.strokeStyle = 'rgba(255, 102, 0, 0.05)';
+        ctx.strokeStyle = 'rgba(0, 200, 80, 0.05)';
         ctx.lineWidth = 1;
         ctx.beginPath();
         for (var gy = 0; gy < rows; gy++) {
@@ -270,7 +270,7 @@
             ctx.stroke();
             var grad = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, e.radius);
             grad.addColorStop(0, getColor(e.hue, e.alpha * 0.3));
-            grad.addColorStop(1, 'rgba(255, 102, 0, 0)');
+            grad.addColorStop(1, 'rgba(0, 200, 80, 0)');
             ctx.fillStyle = grad;
             ctx.fill();
         }
@@ -284,7 +284,7 @@
             var glowR = p.size * 3;
             var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowR);
             grad.addColorStop(0, getParticleColor(p, alpha * 0.6));
-            grad.addColorStop(1, 'rgba(255, 102, 0, 0)');
+            grad.addColorStop(1, 'rgba(0, 200, 80, 0)');
             ctx.fillStyle = grad;
             ctx.beginPath();
             ctx.arc(p.x, p.y, glowR, 0, Math.PI * 2);
@@ -313,7 +313,7 @@
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = 'rgba(255, 102, 0, ' + (0.1 * (1 - dist / 100)) + ')';
+                    ctx.strokeStyle = 'rgba(0, 200, 80, ' + (0.1 * (1 - dist / 100)) + ')';
                     ctx.lineWidth = 0.5;
                     ctx.stroke();
                 }
