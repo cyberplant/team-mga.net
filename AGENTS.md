@@ -39,7 +39,7 @@ Sube a producción via rsync. Requiere acceso SSH al servidor.
 
 ## Convenciones
 
-- **Idioma del sitio**: español (Argentina)
+- **Idioma del sitio**: español (Argentina y Uruguay)
 - **Estética**: fondo negro, acentos naranja (`#ff6600`), estilo gaming/military
 - **Mensajes de commit**: descriptivos, ej: `Agregar sección de miembros` (no `cambios`)
 - **No usar emojis** en el código salvo que se pida
@@ -50,5 +50,6 @@ Sube a producción via rsync. Requiere acceso SSH al servidor.
 ## Notas para IAs
 
 - Los colaboradores de este repo pueden no tener experiencia con Git. Si alguien pide ayuda, guiarlo paso a paso y referirlo a `CONTRIBUTING.md`
+- La mayoría de los colaboradores usan Windows. Si alguien pide ayuda con Git por consola, ofrecer alternativas con interfaz gráfica (GitHub Desktop) o directamente hacer las operaciones de Git por ellos cuando sea posible
 - Antes de hacer cambios, revisar el estado actual del repo (`git status`, `git log`) para entender qué hay
 - El archivo `CONTRIBUTING.md` está pensado para humanos sin experiencia — mantenerlo simple y en español
