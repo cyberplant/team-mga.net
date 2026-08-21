@@ -4,7 +4,7 @@ Guía para IAs que trabajan en este repositorio.
 
 ## Qué es este repo
 
-Sitio web del equipo |MGA| de Call of Duty 4. Actualmente es un placeholder, pero está pensado para evolucionar a medida que el equipo vaya sumando ideas y contenido.
+Sitio web del equipo |MGA| de Call of Duty 4. Sitio estático completo con sidebar, secciones de servidor, mapas, miembros, staff, reglas, galería, GameTracker y contacto.
 
 **URL producción:** https://team-mga.net/
 **Hosting:** Dreamhost (`team_mga@roji.net:~/team-mga.net/`)
@@ -19,14 +19,6 @@ Sitio web del equipo |MGA| de Call of Duty 4. Actualmente es un placeholder, per
 
 Secrets de GitHub Actions: `SSH_PRIVATE_KEY`, `SSH_KNOWN_HOSTS`
 
-### Manual (backup)
-
-```bash
-./upload.sh
-```
-
-Sube a producción via rsync. Requiere acceso SSH al servidor.
-
 ## Flujo de trabajo con Git
 
 1. Crear branch desde `main` (`git checkout -b mi-cambio`)
@@ -40,7 +32,7 @@ Sube a producción via rsync. Requiere acceso SSH al servidor.
 ## Convenciones
 
 - **Idioma del sitio**: español (Argentina y Uruguay)
-- **Estética**: fondo negro, acentos naranja (`#ff6600`), estilo gaming/military
+- **Estética**: fondo oscuro, verde militar y dorado (ver `css/style.css`), estilo gaming/military
 - **Mensajes de commit**: descriptivos, ej: `Agregar sección de miembros` (no `cambios`)
 - **No usar emojis** en el código salvo que se pida
 - **No crear archivos de documentación** salvo que se pida explícitamente
