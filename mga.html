@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0b08">
+  <meta name="description" content="Team MGA — Call of Duty 4 Multiplayer. Honor y Coraje.">
+  <title>TEAM MGA | COD4 Multiplayer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="site-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#inicio" aria-label="Team MGA Inicio">
+        <img src="assets/images/mga-cod4-logo.png" alt="Call of Duty 4 Modern Warfare — MGA">
+      </a>
+      <div class="team-line">↠ <strong>TEAM MGA</strong> ↞</div>
+      <div class="team-line"><strong><?php echo $valorActual; ?> Visitas </strong></div>
+      <div class="since">DESDE 2025 | UNIÓN · RESPETO · LEALTAD</div>
+      <div class="country-flags" aria-label="Países representados en Team MGA">
+        <img src="assets/images/flags/argentina.svg" alt="Argentina" title="Argentina">
+        <img src="assets/images/flags/brasil.svg" alt="Brasil" title="Brasil">
+        <img src="assets/images/flags/colombia.svg" alt="Colombia" title="Colombia">
+        <img src="assets/images/flags/cuba.svg" alt="Cuba" title="Cuba">
+        <img src="assets/images/flags/paraguay.svg" alt="Paraguay" title="Paraguay">
+        <img src="assets/images/flags/uruguay.svg" alt="Uruguay" title="Uruguay">
+        <img src="assets/images/flags/venezuela.svg" alt="Venezuela" title="Venezuela">
+      </div>
+
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a class="active" href="#inicio"><span>⌂</span> INICIO</a>
+        <a href="#servidor"><span>▤</span> SERVIDOR</a>
+        <a href="#mapas"><span>◫</span> MAPAS</a>
+        <a href="#miembros"><span>♟</span> MIEMBROS</a>
+        <a href="#staff"><span>✪</span> STAFF</a>
+        <a href="#reglas"><span>✦</span> REGLAS</a>
+        <a href="reglamento.html"><span>§</span> REGLAMENTO</a>
+        <a href="#galeria"><span>▧</span> GALERÍA</a>
+        <a href="#contacto"><span>✉</span> CONTACTO</a>
+      </nav>
+    </aside>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">☰</button>
+
+    <main class="content">
+      <section id="inicio" class="hero" aria-label="Team MGA">
+        <div class="hero-shade"></div>
+        <div class="hero-copy">
+          <span class="kicker">CALL OF DUTY 4 · MULTIPLAYER</span>
+          <h1>TEAM <em>MGA</em></h1>
+          <p>EL HONOR Y EL CORAJE</p>
+          <a href="#servidor" class="hero-btn">ENTRAR AL SERVIDOR</a>
+        </div>
+      </section>
+
+      <section id="servidor" class="server-strip panel">
+        <div class="server-icon">▣</div>
+        <div class="server-main">
+          <small>SERVIDOR TEAM MGA</small>
+          <strong id="serverIp">45.235.99.18:28960</strong>
+        </div>
+        <div class="server-stat"><small>MOD</small><b>MGA</b></div>
+        <div class="server-stat online"><small>ESTADO</small><b><i></i> ONLINE</b></div>
+        <div class="server-actions">
+          <button class="connect" onclick="connectServer()">CONECTAR AHORA</button>
+          <button class="copy" onclick="copyIP()">COPIAR IP ⧉</button>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <article id="mapas" class="panel maps-panel">
+          <h2>⊕ &nbsp; MAPAS EN ROTACIÓN</h2>
+          <div id="mapList" class="map-list"></div>
+          <div class="gametype">GAMETYPE WAR</div>
+        </article>
+
+        <article id="staff" class="panel staff-panel">
+          <h2>✪ &nbsp; ADMINISTRADORES</h2>
+          <div id="adminList" class="people-list admins"></div>
+          <div class="divider"></div>
+          <h2>✪ &nbsp; MODERADORES</h2>
+          <div id="modList" class="people-list mods"></div>
+        </article>
+
+        <article id="reglas" class="panel rules-panel">
+          <h2>▣ &nbsp; REGLAS DEL SERVIDOR</h2>
+          <div class="rules-hero">
+            <span>EL HONOR</span>
+            <span>Y EL <em>CORAJE</em></span>
+          </div>
+          <p>Jugamos fuerte, competimos en serio y cuidamos la comunidad. El Honor y el Coraje son la regla.</p>
+          <div class="rules-actions"><a href="reglamento.html">REGLAMENTO OFICIAL</a></div>
+        </article>
+      </section>
+
+      <section class="panel practical-rules" aria-labelledby="resumenReglas">
+        <div class="practical-rules-head">
+          <div><span class="section-kicker">REGLAMENTO MGA · GUÍA RÁPIDA</span><h2 id="resumenReglas">RESUMEN PRÁCTICO DEL REGLAMENTO</h2></div>
+          <div class="rules-actions"><a href="reglamento.html">VER REGLAMENTO OFICIAL</a></div>
+        </div>
+        <div class="quick-rules-grid">
+          <div><b>FPS</b><span>Máximo 250. El indicador debe estar SIEMPRE visible.</span></div>
+          <div><b>PING</b><span>Máximo 250 ms sostenidos. Los picos ocasionales no implican sanción automática.</span></div>
+          <div><b>CHEATS / HACKS</b><span>Tolerancia cero: aimbot, wallhack, ESP, triggerbot, radar hack y similares.</span></div>
+          <div><b>PROMOD</b><span>No está prohibido por sí mismo; sí cualquier configuración que otorgue ventajas injustas.</span></div>
+          <div><b>SCRIPTS / MACROS</b><span>Prohibidos cuando automaticen acciones o generen ventajas artificiales.</span></div>
+          <div><b>GLITCHES / EXPLOITS</b><span>Prohibido aprovechar bugs, salir del mapa o usar posiciones claramente indebidas.</span></div>
+          <div><b>CAMPING</b><span>Permitido como estrategia. No se admite Spawn Camping deliberado y reiterado.</span></div>
+          <div><b>CONVIVENCIA</b><span>Respeto entre jugadores. No amenazas, acoso, discriminación ni hostigamiento permanente.</span></div>
+          <div><b>SCREENSHOTS MGA</b><span>Pueden realizarse aleatoriamente y sin aviso previo como control administrativo.</span></div>
+          <div><b>SANCIONES</b><span>Criterio progresivo; las infracciones graves pueden recibir sanción inmediata.</span></div>
+        </div>
+        <p class="quick-rules-note">El ingreso y permanencia en el servidor implica la aceptación del Reglamento Oficial MGA.</p>
+      </section>
+
+      <section id="miembros" class="panel members-section">
+        <span class="section-kicker">TEAM MGA · DESDE 2025</span>
+        <h2>MIEMBROS DEL TEAM MGA</h2>
+        <div id="memberList" class="member-list"></div>
+      </section>
+
+      <section class="panel gametracker-section" aria-label="GameTracker del servidor Team MGA">
+        <div class="gametracker-copy">
+          <span class="section-kicker">SERVIDOR TEAM MGA</span>
+          <h2>SEGUIMIENTO DEL SERVIDOR</h2>
+          <p>Estado, mapa actual, jugadores conectados y ranking, con GameTracker integrado a la paleta visual de MGA.</p>
+        </div>
+        <div class="gametracker-widget">
+          <iframe src="https://cache.gametracker.com/components/html0/?host=45.235.99.18:28960&amp;bgColor=11120e&amp;fontColor=d9d5c8&amp;titleBgColor=151710&amp;titleColor=a0ad60&amp;borderColor=454333&amp;linkColor=b4893d&amp;borderLinkColor=3b3a2b&amp;showMap=1&amp;currentPlayersHeight=200&amp;showCurrPlayers=1&amp;topPlayersHeight=130&amp;showTopPlayers=1&amp;showBlogs=0&amp;width=250" frameborder="0" scrolling="no" width="250" height="666" title="GameTracker Team MGA"></iframe>
+        </div>
+      </section>
+
+      <section id="galeria" class="gallery">
+        <div class="gallery-head">
+          <span class="section-kicker">TEAM MGA · COD4 MP</span>
+          <h2>GALERÍA MGA</h2>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-wide"><img src="assets/images/hero-main.png" alt="Team MGA en un campo de batalla inspirado en Call of Duty 4"></figure>
+          <figure><img src="assets/images/gallery-emblem-round.png" alt="Emblema circular Team MGA Call of Duty 4"></figure>
+          <figure class="gallery-landscape"><img src="assets/images/gallery-gaucho-avp.png" alt="Gaucho MGA junto a Predator y Alien"></figure>
+          <figure class="gallery-tall"><img src="assets/images/gallery-gaucho-chase.png" alt="Gaucho MGA perseguido por Predator y Alien"></figure>
+          <figure class="gallery-tall"><img src="assets/images/gallery-mga-shield.png" alt="Escudo Team MGA COD4 MP"></figure>
+          <figure class="gallery-tall"><img src="assets/images/gallery-mga-skull.png" alt="Calavera con boina MGA Call of Duty 4"></figure>
+          <figure class="gallery-square"><img src="assets/images/gaucho-hud.png" alt="Gaucho MGA integrado a una escena de juego Call of Duty 4"></figure>
+          <figure class="gallery-landscape"><img src="assets/images/mga-membrete.png" alt="Membrete gráfico MGA con gaucho, Predator y Alien"></figure>
+        </div>
+      </section>
+
+      <section id="contacto" class="contact panel">
+        <div><small>SERVIDOR</small><strong>45.235.99.18:28960</strong></div>
+        <div><small>TEAM</small><strong>MGA</strong></div>
+        <div><small>LEMA</small><strong>HONOR · CORAJE</strong></div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-logo"><img src="assets/images/mga-cod4-logo.png" alt="MGA COD4"></div>
+    <div class="footer-center">
+      <div>© 2025 TEAM MGA · TODOS LOS DERECHOS RESERVADOS</div>
+      <div class="footer-credits">
+        <span><b>Mapas:</b> Alpha</span>
+        <span><b>Desarrollo Web:</b> Aquiles Báez Zabala / Col. Kurtz / DJ Carlos Hermida / Viejo Choto</span>
+        <span><b>Musicalización MGA:</b> DJ Carlos Herminda</span>
+      </div>
+    </div>
+    <div class="footer-right">
+      <strong>UNIÓN · RESPETO · LEALTAD</strong>
+      <div class="social-links" aria-label="Redes y enlaces Team MGA">
+        <a class="social-instagram" href="https://www.instagram.com/clan.mga/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="social-dot" cx="17.4" cy="6.7" r="1.1"/></svg>
+        </a>
+        <a class="social-gametracker" href="https://www.gametracker.com/server_info/45.235.99.18:28960/" target="_blank" rel="noopener noreferrer" title="GameTracker" aria-label="GameTracker">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="3.2"/><path d="M12 1.8v4M12 18.2v4M1.8 12h4M18.2 12h4"/></svg>
+        </a>
+        <a class="social-whatsapp" href="https://chat.whatsapp.com/F00kcSlsPZZ1HjWGbJu062" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 11.7a8.2 8.2 0 0 1-12.1 7.2l-4.4 1.2 1.2-4.2A8.2 8.2 0 1 1 20.2 11.7Z"/><path d="M8.3 7.8c.3-.5.6-.5.9-.5h.5c.2 0 .4.1.5.5l.8 1.9c.1.3.1.5-.1.7l-.6.8c-.2.2-.2.4 0 .7.7 1.2 1.6 2.2 2.8 2.9.3.2.5.2.7 0l.9-1c.2-.2.4-.3.7-.2l1.9.9c.3.1.5.3.5.6 0 .3-.2 1.5-1.1 2.2-.8.7-1.8.9-3 .6-1.4-.3-3.3-1-5.1-2.6-1.5-1.4-2.6-3.1-3.1-4.6-.5-1.4-.1-2.4.5-2.9.3-.3.6-.5.8-.5" class="phone"/></svg>
+        </a>
+        <a class="social-discord" href="https://discord.gg/EXZTMr7x5" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 6.3A14 14 0 0 1 10 5.5l.4.8a10.5 10.5 0 0 1 3.2 0l.4-.8a14 14 0 0 1 2.8.8c2.1 3.1 2.7 6.2 2.4 9.2a11 11 0 0 1-3.5 1.8l-.9-1.2a8 8 0 0 0 1.1-.6c-2.4 1.1-5.4 1.1-7.8 0 .4.2.7.4 1.1.6l-.9 1.2a11 11 0 0 1-3.5-1.8c-.4-3.5.6-6.6 2.4-9.2Z"/><circle class="discord-eye" cx="9.5" cy="12.1" r="1.15"/><circle class="discord-eye" cx="14.5" cy="12.1" r="1.15"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>
