@@ -1,0 +1,11 @@
+<IfModule mod_headers.c>
+  <FilesMatch "\.(?:html?|php)$">
+    Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header always set Pragma "no-cache"
+    Header always set Expires "0"
+  </FilesMatch>
+
+  <FilesMatch "\.(?:css|js|png|jpe?g|gif|svg|ico|webp|woff2?)$">
+    Header always set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
