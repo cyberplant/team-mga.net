@@ -31,3 +31,25 @@ document.querySelectorAll('.main-nav a').forEach(a=>a.addEventListener('click',(
   a.classList.add('active');
   sidebar.classList.remove('open');
 }));
+
+
+// Contador de visitas opcional. La web funciona normalmente aunque PHP no esté disponible.
+(function loadVisitorCount(){
+  const el = document.querySelector('#visitCounter');
+  if (!el) return;
+
+  fetch('contador.php', { cache: 'no-store' })
+    .then(response => {
+      if (!response.ok) throw new Error('Contador no disponible');
+      return response.text();
+    })
+    .then(text => {
+      const count = Number.parseInt(text.trim(), 10);
+      if (!Number.isFinite(count) || count < 0) throw new Error('Respuesta inválida');
+      el.innerHTML = `<strong>${count.toLocaleString('es-UY')} Visitas</strong>`;
+    })
+    .catch(() => {
+      // Degradación silenciosa: no afecta el resto de la página.
+      el.innerHTML = '<strong>Visitas</strong>';
+    });
+})();
