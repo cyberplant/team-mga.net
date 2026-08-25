@@ -55,7 +55,7 @@ jobs:
 
   # Deploy de preview: push a cualquier branch que no sea main, o PR abierto/actualizado
   deploy-preview:
-    name: Deploy preview (${{ github.ref_name }})
+    name: Deploy preview (${{ github.head_ref || github.ref_name }})
     if: (github.event_name == 'push' && github.ref != 'refs/heads/main') || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     steps:
