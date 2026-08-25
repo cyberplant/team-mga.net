@@ -57,14 +57,13 @@ jobs:
 
   # Deploy de preview: push a cualquier branch que no sea main, o PR abierto/actualizado
   deploy-preview:
-    name: Deploy preview (${{ github.event.pull_request.head.ref || github.ref_name }})
+    name: Deploy preview (${{ github.head_ref || github.ref_name }})
     if: (github.event_name == 'push' && github.ref != 'refs/heads/main') || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          ref: ${{ github.event.pull_request.head.ref || github.ref }}
           lfs: true
 
       - name: Setup SSH
@@ -79,7 +78,14 @@ jobs:
       - name: Sanitize branch name
         id: branch
         run: |
-          BRANCH="${{ github.event.pull_request.head.ref || github.ref_name }}"
+          # En PR events, github.ref_name es "{number}/merge"; usar head_ref
+          # En push events, github.ref_name es el nombre de la branch
+          HEAD_REF="${{ github.head_ref }}"
+          if [ -n "$HEAD_REF" ]; then
+            BRANCH="$HEAD_REF"
+          else
+            BRANCH="${{ github.ref_name }}"
+          fi
           SAFE=$(echo "$BRANCH" | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/\.\.*/-/g')
           echo "safe_name=$SAFE" >> $GITHUB_OUTPUT
           echo "Branch segura: $SAFE"
