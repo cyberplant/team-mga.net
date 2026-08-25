@@ -7,6 +7,8 @@ on:
       - '**'
   pull_request:
     types:
+      - opened
+      - synchronize
       - closed
 
 permissions:
@@ -51,14 +53,16 @@ jobs:
       - name: Notify
         run: 'echo "Deployado a produccion: https://team-mga.net/"'
 
-  # Deploy de preview: push a cualquier branch que no sea main
+  # Deploy de preview: push a cualquier branch que no sea main, o PR abierto/actualizado
   deploy-preview:
-    name: Deploy preview (${{ github.ref_name }})
-    if: github.ref != 'refs/heads/main' && github.event_name == 'push'
+    name: Deploy preview (${{ github.event.pull_request.head.ref || github.ref_name }})
+    if: (github.event_name == 'push' && github.ref != 'refs/heads/main') || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref }}
 
       - name: Setup SSH
         run: |
@@ -72,7 +76,8 @@ jobs:
       - name: Sanitize branch name
         id: branch
         run: |
-          SAFE=$(echo "${{ github.ref_name }}" | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/\.\.*/-/g')
+          BRANCH="${{ github.event.pull_request.head.ref || github.ref_name }}"
+          SAFE=$(echo "$BRANCH" | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/\.\.*/-/g')
           echo "safe_name=$SAFE" >> $GITHUB_OUTPUT
           echo "Branch segura: $SAFE"
 
@@ -99,8 +104,12 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PREVIEW_URL="https://team-mga.net/branch/$SAFE_NAME/"
-          # Buscar PRs abiertos para esta branch
-          PR_NUMBER=$(gh pr list --head "${{ github.ref_name }}" --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
+          # En eventos de PR, tenemos el numero directo; en push, hay que buscarlo
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+          else
+            PR_NUMBER=$(gh pr list --head "${{ github.ref_name }}" --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
+          fi
           if [ -n "$PR_NUMBER" ]; then
             # Buscar si ya existe un comentario nuestro con la URL
             EXISTING=$(gh pr view "$PR_NUMBER" --json comments --jq '.comments[] | select(.body | contains("Preview deployada")) | .id' 2>/dev/null | tail -1 || echo "")
