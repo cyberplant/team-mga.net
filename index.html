@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260825-1">
+  <link rel="stylesheet" href="css/style.css?v=20260914-1">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -58,25 +58,28 @@
         </div>
       </section>
 
-      <section id="servidor" class="server-strip panel">
-        <div class="server-icon">▣</div>
-        <div class="server-main">
-          <small>SERVIDOR TEAM MGA</small>
-          <strong id="serverIp">45.235.99.18:28960</strong>
-        </div>
-        <div class="server-stat"><small>MOD</small><b>MGA</b></div>
-        <div class="server-stat online"><small>ESTADO</small><b><i></i> ONLINE</b></div>
-        <div class="server-actions">
-          <button class="connect" onclick="connectServer()">CONECTAR AHORA</button>
-          <button class="copy" onclick="copyIP()">COPIAR IP ⧉</button>
-        </div>
+      <section id="servidor" class="servers-panel panel">
+        <article class="server-entry">
+          <div class="server-main"><b>|MGA| 1 S&amp;D</b><strong data-server-ip="1">CARGANDO…</strong><span class="server-hostname" data-server-hostname="1">CARGANDO…</span></div>
+          <div class="server-actions">
+            <button class="connect" data-server-action="connect" data-server="1" disabled>CONECTAR</button>
+            <button class="copy" data-server-action="copy" data-server="1" disabled>COPIAR IP ⧉</button>
+          </div>
+        </article>
+        <article class="server-entry">
+          <div class="server-main"><b>|MGA| 2 SNIPER</b><strong data-server-ip="2">CARGANDO…</strong><span class="server-hostname" data-server-hostname="2">CARGANDO…</span></div>
+          <div class="server-actions">
+            <button class="connect" data-server-action="connect" data-server="2" disabled>CONECTAR</button>
+            <button class="copy" data-server-action="copy" data-server="2" disabled>COPIAR IP ⧉</button>
+          </div>
+        </article>
       </section>
 
       <section class="dashboard-grid">
         <article id="mapas" class="panel maps-panel">
           <h2>⊕ &nbsp; MAPAS EN ROTACIÓN</h2>
           <div id="mapList" class="map-list"></div>
-          <div class="gametype">Modo de juego: TDM (Combate a muerte por equipos)</div>
+          <div class="gametype">Modos destacados: S&amp;D · Sniper</div>
         </article>
 
         <article id="staff" class="panel staff-panel">
@@ -118,21 +121,98 @@
         <p class="quick-rules-note">El ingreso y permanencia en el servidor implica la aceptación del Reglamento Oficial MGA.</p>
       </section>
 
+      <section class="panel scoring-section" aria-labelledby="tablaPuntuaciones">
+        <div class="scoring-head">
+          <span class="section-kicker">SISTEMA DE JUEGO MGA</span>
+          <h2 id="tablaPuntuaciones">TABLA DE PUNTUACIONES</h2>
+          <p>Cada acción suma según su impacto en la partida y en el juego de equipo.</p>
+        </div>
+        <div class="scoring-grid">
+          <article class="score-card score-objectives">
+            <h3>OBJETIVOS</h3>
+            <dl>
+              <div><dt>Capturar un objetivo</dt><dd>30</dd></div>
+              <div><dt>Defender un objetivo</dt><dd>30</dd></div>
+              <div><dt>Plantar la bomba</dt><dd>20</dd></div>
+              <div><dt>Desactivar la bomba</dt><dd>20</dd></div>
+              <div><dt>Tomar un objetivo</dt><dd>7</dd></div>
+              <div><dt>Devolver un objetivo</dt><dd>7</dd></div>
+              <div><dt>Matar al portador del objetivo</dt><dd>5</dd></div>
+              <div><dt>Asaltar un objetivo</dt><dd>5</dd></div>
+              <div><dt>Mantener un objetivo</dt><dd>2</dd></div>
+            </dl>
+          </article>
+          <article class="score-card">
+            <h3>BAJAS</h3>
+            <dl>
+              <div><dt>Disparo en la cabeza</dt><dd>15</dd></div>
+              <div><dt>Cuchillo / cuerpo a cuerpo</dt><dd>15</dd></div>
+              <div><dt>Baja normal</dt><dd>10</dd></div>
+              <div><dt>Baja con granada, C4 o claymore</dt><dd>10</dd></div>
+              <div><dt>Baja con RPG o lanzagranadas</dt><dd>10</dd></div>
+              <div><dt>Explosión de vehículo o barril</dt><dd>10</dd></div>
+              <div><dt>Ataque aéreo o helicóptero</dt><dd>10</dd></div>
+            </dl>
+          </article>
+          <article class="score-card">
+            <h3>RACHAS Y APOYO</h3>
+            <dl>
+              <div><dt>Derribar un helicóptero</dt><dd>20</dd></div>
+              <div><dt>Usar una recompensa de racha</dt><dd>10</dd></div>
+            </dl>
+          </article>
+          <article class="score-card">
+            <h3>ASISTENCIAS</h3>
+            <dl>
+              <div><dt>Categoría 75</dt><dd>5</dd></div>
+              <div><dt>Categoría 50</dt><dd>4</dd></div>
+              <div><dt>Categoría 25</dt><dd>3</dd></div>
+              <div><dt>Asistencia básica</dt><dd>2</dd></div>
+            </dl>
+          </article>
+          <article class="score-card score-neutral">
+            <h3>SIN SUMA NI DESCUENTO</h3>
+            <dl>
+              <div><dt>Morir</dt><dd>0</dd></div>
+              <div><dt>Suicidarse</dt><dd>0</dd></div>
+              <div><dt>Matar a un compañero</dt><dd>0</dd></div>
+            </dl>
+          </article>
+        </div>
+      </section>
+
       <section id="miembros" class="panel members-section">
         <span class="section-kicker">TEAM MGA · DESDE 2025</span>
         <h2>MIEMBROS DEL TEAM MGA</h2>
         <div id="memberList" class="member-list"></div>
       </section>
 
-      <section class="panel gametracker-section" aria-label="GameTracker del servidor Team MGA">
+      <section id="gametracker" class="panel gametracker-section" aria-label="GameTracker de los servidores Team MGA">
         <div class="gametracker-copy">
-          <span class="section-kicker">SERVIDOR TEAM MGA</span>
-          <h2>SEGUIMIENTO DEL SERVIDOR</h2>
-          <p>Estado, mapa actual, jugadores conectados y ranking, con GameTracker integrado a la paleta visual de MGA.</p>
+          <span class="section-kicker">SERVIDORES TEAM MGA</span>
+          <h2>SEGUIMIENTO EN GAMETRACKER</h2>
+          <p>Estado, mapa actual, jugadores conectados y ranking de los servidores de Team MGA.</p>
         </div>
-        <div class="gametracker-widget">
-          <iframe src="https://cache.gametracker.com/components/html0/?host=45.235.99.18:28960&amp;bgColor=11120e&amp;fontColor=d9d5c8&amp;titleBgColor=151710&amp;titleColor=a0ad60&amp;borderColor=454333&amp;linkColor=b4893d&amp;borderLinkColor=3b3a2b&amp;showMap=1&amp;currentPlayersHeight=200&amp;showCurrPlayers=1&amp;topPlayersHeight=130&amp;showTopPlayers=1&amp;showBlogs=0&amp;width=250" frameborder="0" scrolling="no" width="250" height="666" title="GameTracker Team MGA"></iframe>
+        <div class="gametracker-widgets">
+          <article class="gametracker-card"><h3>|MGA| 1 · S&amp;D</h3><div class="gametracker-widget"><iframe id="gameTrackerWidget" src="about:blank" frameborder="0" scrolling="no" width="250" height="666" title="GameTracker |MGA| 1 S&amp;D"></iframe></div></article>
+          <article class="gametracker-card"><h3>|MGA| 2 · SNIPER</h3><div id="gameTracker2Slot" class="gametracker-placeholder"><strong>PRÓXIMAMENTE</strong><span>GameTracker todavía no disponible</span></div></article>
         </div>
+      </section>
+
+      <section id="comunidad" class="panel cod4-amigos-section" aria-labelledby="cod4AmigosTitle">
+        <div class="cod4-amigos-copy">
+          <span class="section-kicker">4 SERVERS · 1 COMUNIDAD</span>
+          <h2 id="cod4AmigosTitle">MGA ES PARTE DE COD 4 AMIGOS</h2>
+          <p>Team MGA integra esta comunidad de servidores de Call of Duty 4, unida por el juego limpio, el respeto y la diversión.</p>
+          <div class="cod4-amigos-values"><span>COMUNIDAD ACTIVA</span><span>FAIR PLAY</span><span>RESPETO</span><span>DIVERSIÓN</span></div>
+          <div class="cod4-amigos-servers" aria-label="Servidores de COD 4 Amigos">
+            <div><span>IP MOD <b>CORE</b></span><strong>134.65.232.196:20321</strong></div>
+            <div><span>IP MOD <b>BR COBRAS</b></span><strong>163.176.181.43:23698</strong></div>
+            <div><span>IP MOD <b>MGA</b></span><strong data-server-ip="1">CARGANDO…</strong></div>
+            <div><span>IP <b>PROMOD VSS</b></span><strong>163.176.191.151:28965</strong></div>
+          </div>
+        </div>
+        <figure><img src="assets/images/cod4-amigos-mga-v2.png?v=20260914-2" alt="COD 4 Amigos: servidores Core, BR Cobras, MGA y Promod VSS"></figure>
       </section>
 
       <section id="galeria" class="gallery">
@@ -153,9 +233,8 @@
       </section>
 
       <section id="contacto" class="contact panel">
-        <div><small>SERVIDOR</small><strong>45.235.99.18:28960</strong></div>
-        <div><small>TEAM</small><strong>MGA</strong></div>
-        <div><small>LEMA</small><strong>HONOR · CORAJE</strong></div>
+        <div><small>|MGA| 1 · S&amp;D</small><strong data-server-ip="1">CARGANDO…</strong><span class="server-hostname" data-server-hostname="1">CARGANDO…</span></div>
+        <div><small>|MGA| 2 · SNIPER</small><strong data-server-ip="2">CARGANDO…</strong><span class="server-hostname" data-server-hostname="2">CARGANDO…</span></div>
       </section>
     </main>
   </div>
@@ -176,7 +255,7 @@
         <a class="social-instagram" href="https://www.instagram.com/clan.mga/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="social-dot" cx="17.4" cy="6.7" r="1.1"/></svg>
         </a>
-        <a class="social-gametracker" href="https://www.gametracker.com/server_info/45.235.99.18:28960/" target="_blank" rel="noopener noreferrer" title="GameTracker" aria-label="GameTracker">
+        <a id="gameTrackerLink" class="social-gametracker" href="https://www.gametracker.com/" target="_blank" rel="noopener noreferrer" title="GameTracker" aria-label="GameTracker">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="3.2"/><path d="M12 1.8v4M12 18.2v4M1.8 12h4M18.2 12h4"/></svg>
         </a>
         <a class="social-whatsapp" href="https://chat.whatsapp.com/F00kcSlsPZZ1HjWGbJu062" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp">
@@ -190,6 +269,6 @@
   </footer>
 
   <div id="toast" role="status" aria-live="polite"></div>
-  <script src="js/app.js?v=20260825-1"></script>
+  <script src="js/app.js?v=20260914-3"></script>
 </body>
 </html>

@@ -1,0 +1,2 @@
+# Hostname: server1.team-mga.net
+185.192.124.78:28963
