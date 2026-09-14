@@ -42,6 +42,7 @@ a{color:inherit;text-decoration:none}.site-shell{display:grid;grid-template-colu
 
 /* Servidores MGA */
 .servers-panel{margin:0 14px 14px;min-height:116px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;overflow:hidden}.server-entry{display:grid;grid-template-columns:minmax(230px,1fr) 120px;background:linear-gradient(135deg,rgba(133,151,72,.08),rgba(0,0,0,0))}.server-entry+ .server-entry{border-left:1px solid #454333}.server-entry .server-main{border:0;padding:16px 22px}.server-entry .server-main b{margin:0 0 8px;color:#d1ccb9;font-size:21px;letter-spacing:1.2px;white-space:nowrap}.server-entry .server-main strong{font-size:22px;white-space:nowrap}.server-entry .server-actions{border-left:1px solid #353529;padding:14px 12px}.server-entry .connect{height:46px;font-size:15px}.server-entry .copy{height:28px}
+.server-hostname{display:block;margin-top:5px;color:#aaa597;font-size:13px;letter-spacing:.8px}.server-hostname:before{content:'HOSTNAME · ';color:#778548;font-size:10px;letter-spacing:1px}.contact .server-hostname{margin-top:6px}
 @media(max-width:1180px){.server-entry{grid-template-columns:1fr 105px}.server-entry .server-main b{font-size:18px}.server-entry .server-main strong{font-size:18px}}
 @media(max-width:780px){.servers-panel{margin:0;grid-template-columns:1fr}.server-entry+ .server-entry{border-left:0;border-top:1px solid #454333}}
 @media(max-width:480px){.server-entry{grid-template-columns:1fr}.server-entry .server-actions{border-left:0;border-top:1px solid #353529}}

@@ -32,13 +32,17 @@ function isValidServerAddress(value){
 async function loadServerAddress(number){
   const response = await fetch(`ip_server_${number}.txt`, { cache: 'no-store' });
   if (!response.ok) throw new Error(`Servidor ${number} no disponible`);
-  const address = (await response.text())
-    .split(/\r?\n/)
-    .map(line => line.trim())
+  const lines = (await response.text()).split(/\r?\n/).map(line => line.trim());
+  const address = lines
     .find(line => line && !line.startsWith('#')) || '';
+  const hostnameLine = lines.find(line => /^#\s*Hostname\s*:/i.test(line));
+  const hostname = hostnameLine ? hostnameLine.replace(/^#\s*Hostname\s*:\s*/i, '') : '';
   if (!isValidServerAddress(address)) throw new Error(`Dirección inválida para servidor ${number}`);
   serverAddresses[number] = address;
   document.querySelectorAll(`[data-server-ip="${number}"]`).forEach(el => { el.textContent = address; });
+  document.querySelectorAll(`[data-server-hostname="${number}"]`).forEach(el => {
+    el.textContent = hostname || 'HOSTNAME NO DISPONIBLE';
+  });
   document.querySelectorAll(`[data-server="${number}"]`).forEach(button => { button.disabled = false; });
   return address;
 }
@@ -55,6 +59,9 @@ Promise.all([loadServerAddress(1), loadServerAddress(2)])
   .catch(() => {
     document.querySelectorAll('[data-server-ip]').forEach(el => {
       if (el.textContent === 'CARGANDO…') el.textContent = 'NO DISPONIBLE';
+    });
+    document.querySelectorAll('[data-server-hostname]').forEach(el => {
+      if (el.textContent === 'CARGANDO…') el.textContent = 'HOSTNAME NO DISPONIBLE';
     });
   });
 

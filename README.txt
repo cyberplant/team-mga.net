@@ -10,6 +10,7 @@ Las direcciones de los servidores se administran en:
 - gametracker_server_1.txt — URL de GameTracker de |MGA| 1 S&D
 
 La página carga estos valores dinámicamente mediante JavaScript. Cada archivo debe contener una única dirección en formato host:puerto.
+Los comentarios `# Hostname:` también se muestran en la página como direcciones fáciles de recordar.
 
 GameTracker del servidor 2 se administra en gametracker_server_2.txt. Mientras el archivo conserve solamente su comentario, la web muestra “Próximamente”. Cuando esté disponible, reemplace el contenido por la URL completa de GameTracker.
 
