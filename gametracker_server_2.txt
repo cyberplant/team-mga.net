@@ -1,1 +1,1 @@
-# Pegue aquí la URL de GameTracker del servidor 2 cuando esté disponible.
+https://www.gametracker.com/server_info/185.192.124.78:28960/
