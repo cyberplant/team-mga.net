@@ -12,7 +12,7 @@ Las direcciones de los servidores se administran en:
 La página carga estos valores dinámicamente mediante JavaScript. Cada archivo debe contener una única dirección en formato host:puerto.
 Los comentarios `# Hostname:` también se muestran en la página como direcciones fáciles de recordar.
 
-GameTracker del servidor 2 se administra en gametracker_server_2.txt. Mientras el archivo conserve solamente su comentario, la web muestra “Próximamente”. Cuando esté disponible, reemplace el contenido por la URL completa de GameTracker.
+GameTracker de cada servidor se administra en gametracker_server_1.txt y gametracker_server_2.txt. Cada archivo contiene la URL completa de su página en GameTracker.
 
 Administradores:
 Alpha, Atbirra, Col. Kurtz, RCparana
