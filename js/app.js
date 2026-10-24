@@ -1,6 +1,6 @@
 const maps = ['mp_4t4scrap','mp_rats_sansa_room','mp_efa_lake','mp_little_residence','mp_shipmentx2','mp_uber','mp_uprise','mp_vovel','mp_asylum','mp_bank','mp_bo2paintball','mp_cellblocks','mp_decoy_day'];
 const admins = ['Alpha','Atbirra','Col. Kurtz','RCparana'];
-const moderators = ['Micho','Pantera','Saurido','WiS_K4:)'];
+const moderators = ['Micho','Saurido','WiS_K4:)'];
 const members = ['Alpha','Aquiles Báez Zabala','Atbirra','Col. Kurtz','DJ M4nk-0','Fabiannn','Fénix','Hoor','Mapuche','Micho','Monomario','Nacho','Pantera','R2Fly','RCparana','Saurido','Sin Piedad','thebestsong','Viejo Choto','WiS_K4:)','Zhivago'];
 
 document.querySelector('#mapList').innerHTML = maps.map(m => `<div>${m}</div>`).join('');
